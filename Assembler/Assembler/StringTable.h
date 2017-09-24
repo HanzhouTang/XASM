@@ -4,7 +4,14 @@
 class StringTable {
 public:
 	int AddString(std::wstring str);
+	inline static StringTable& Instance() {
+		static StringTable stable;
+		return stable;
+	}
 private:
-	std::map<std::wstring,int> StrMap;
-	std::vector<std::wstring> StrTable;
+	static std::map<std::wstring,int> StrMap;
+	static std::vector<std::wstring> StrTable;
+	StringTable(){}
+	StringTable(const StringTable&){}
+	StringTable& operator=(const StringTable&){}
 };

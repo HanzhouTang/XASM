@@ -15,7 +15,14 @@ public:
 	void AddInstrLookup(std::wstring name, int opcode, int opcount);
 	void SetOpType(std::wstring name, int opIndex, OpTypes optype);
 	std::tuple<bool, InstrLookupNode> GetInstrByMnemonic(std::wstring name);
+	inline static InstrLookupTable& Instance(){
+		static InstrLookupTable instr;
+		return instr;
+	}
 private:
-	std::map<std::wstring, int> InstrLookupMap;
-	std::vector<InstrLookupNode> _InstrLookupTable;
+	static std::map<std::wstring, int> InstrLookupMap;
+	static std::vector<InstrLookupNode> _InstrLookupTable;
+	InstrLookupTable();
+	InstrLookupTable(const InstrLookupTable&){}
+	InstrLookupTable& operator=(const InstrLookupTable&){}
 };

@@ -13,10 +13,18 @@ public:
 	};
 	int AddSymbol(std::wstring indet, int size, int stackindex, int functionindex);
 	std::tuple<bool,SymboleNode> GetSymbolByIndent(std::wstring name, int functindex);
+	std::tuple<bool, SymboleNode> operator[](std::size_t i);
 	int GetStackIndexByIndent(std::wstring name, int funcindex);
 	int GetSizeByIndent(std::wstring name, int funcindex);
+	inline static SymbolTable& Instance() {
+		static SymbolTable symboltable;
+		return symboltable;
+	}
 private:
-	std::map<std::wstring,int> IdentMap;
-	std::vector<SymboleNode> IdentTable;
+	static std::map<std::wstring,int> IdentMap;
+	static std::vector<SymboleNode> IdentTable;
+	SymbolTable(){}
+	SymbolTable(const SymbolTable&){}
+	SymbolTable& operator=(const SymbolTable&){}
 	
 };

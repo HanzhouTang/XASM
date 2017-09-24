@@ -4,7 +4,7 @@
 #include<vector>
 class FunctionTable {
 public:
-	typedef struct FuncNode{
+	struct FuncNode{
 		std::wstring wstrName; //function name
 		int iIndex; // index of vector
 		int iEntryPoint; // the entry point of function
@@ -14,8 +14,15 @@ public:
 	int AddFunc(std::wstring name, int Entry);
 	void SetFuncInfo(std::wstring name, int paramcount, int local);
 	std::tuple<bool,FuncNode> GetFunctionByName(std::wstring name);
+	std::tuple<bool, FuncNode> operator[](std::size_t i);
+	static inline FunctionTable& Instance() {
+		static FunctionTable functable;
+		return functable;
+	}
 private:
-	std::map<std::wstring,int> FuncMap;
-	std::vector<FuncNode> FuncTable;
-
+	FunctionTable(){}
+	FunctionTable(const FunctionTable&){}
+	FunctionTable& operator=(const FunctionTable&){}
+	static std::map<std::wstring,int> FuncMap;
+	static std::vector<FuncNode> FuncTable;
 };

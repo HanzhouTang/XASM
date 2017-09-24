@@ -5,3 +5,6 @@ int HostCallTable::AddHostCall(std::wstring str) {
 	_HostCallTable.push_back(str);
 	return _HostCallTable.size() - 1;
 }
+
+std::vector<std::wstring> HostCallTable::_HostCallTable = {};
+std::map<std::wstring, int> HostCallTable::_HostCallMap = {};

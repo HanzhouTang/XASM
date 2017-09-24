@@ -7,6 +7,11 @@ std::tuple<bool,LabelTable::LabelNode> LabelTable::GetLabelByIdent(std::wstring 
 	return std::make_tuple(false,LabelNode());
 }
 
+std::tuple<bool, LabelTable::LabelNode> LabelTable::operator[](std::size_t i) {
+	if(i>=_LabelTable.size()) return std::make_tuple(false, LabelNode());
+	return std::make_tuple(true, _LabelTable[i]);
+}
+
 int LabelTable::AddLabel(std::wstring name, int targetindex, int funcindex) {
 	auto tempIndex = GetLabelByIdent(name, funcindex);
 	if (std::get<0>(tempIndex)) return std::get<1>(tempIndex).iIndex;
@@ -19,3 +24,6 @@ int LabelTable::AddLabel(std::wstring name, int targetindex, int funcindex) {
 	_LabelTable.push_back(labelNode);
 	return labelNode.iIndex;
 }
+
+std::vector<LabelTable::LabelNode> LabelTable::_LabelTable = {};
+std::map<std::wstring, int> LabelTable::_LabelMap = {};

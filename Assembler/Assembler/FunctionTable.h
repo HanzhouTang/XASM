@@ -15,7 +15,7 @@ public:
 	void SetFuncInfo(std::wstring name, int paramcount, int local);
 	std::tuple<bool,FuncNode> GetFunctionByName(std::wstring name);
 	std::tuple<bool, FuncNode> operator[](std::size_t i);
-	static inline FunctionTable& Instance() {
+	inline static FunctionTable& Instance() {
 		static FunctionTable functable;
 		return functable;
 	}

@@ -110,6 +110,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Assembler.h" />
     <ClInclude Include="constant.h" />
     <ClInclude Include="FunctionTable.h" />
     <ClInclude Include="HostCallTable.h" />
@@ -120,6 +121,7 @@
     <ClInclude Include="SymbolTable.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Assembler.cpp" />
     <ClCompile Include="FunctionTable.cpp" />
     <ClCompile Include="HostCallTable.cpp" />
     <ClCompile Include="InstrLookupTable.cpp" />

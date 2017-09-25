@@ -1,25 +1,12 @@
-#include"FunctionTable.h"
-#include"HostCallTable.h"
-#include"InstrLookupTable.h"
-#include"InstructionOutStream.h"
-#include"LabelTable.h"
-#include"StringTable.h"
-#include"SymbolTable.h"
-#include<iostream>
-#include<stdlib.h>
-#include<string>
-int main() {
-	FunctionTable& funcTable = FunctionTable::Instance();
-	InstrLookupTable& instrLookTable = InstrLookupTable::Instance();
-    LabelTable& labelTable = LabelTable::Instance();
-	SymbolTable& symbolTable = SymbolTable::Instance();
-	auto temp = instrLookTable.GetInstrByMnemonic(L"Call");
-	if (std::get<0>(temp))
-	{
-		auto t = std::get<1>(temp);
-		std::wcout << t.wstrMnemonic <<"\t"<< t.iOpcode << std::endl;
-	
-	}
+#include"Assembler.h"
+
+int main(int argc,char*argv[]) {
+	Assembler& assembler = Assembler::Instance();
+	if (argc == 1) assembler.ExitOnError(L"must contain file name");
+	std::string tempstr = std::string(argv[1]);
+	std::wstring tempwstr = std::wstring(tempstr.begin(), tempstr.end());
+	assembler.LoadSourceCode(tempwstr);
+	assembler.OutPut();
 	system("pause");
 }
 

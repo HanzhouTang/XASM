@@ -43,11 +43,42 @@
 #define INSTR_EXIT              32
 
 // ---- Operand Type Bitfield Flags ---------------------------------------------------
-#define OP_FLAG_TYPE_INT 1//int
-#define OP_FLAG_TYPE_FLOAT 2 //float
-#define OP_FLAG_TYPE_STRING 4 //string
-#define OP_FLAG_TYPE_MEM_REF 8 //variable or array
-#define OP_FLAG_TYPE_LINE_LABEL 16 //line label 
-#define OP_FLAG_TYPE_FUNC_NAME 32 //function name
-#define OP_FLAG_TYPE_HOST_API_CALL 64 //host api call
-#define OP_FLAG_TYPE_REG 128 //register
+#define OP_FLAG_TYPE_INT           1           //int
+#define OP_FLAG_TYPE_FLOAT         2           //float
+#define OP_FLAG_TYPE_STRING        4           //string
+#define OP_FLAG_TYPE_MEM_REF       8           //variable or array
+#define OP_FLAG_TYPE_LINE_LABEL    16          //line label 
+#define OP_FLAG_TYPE_FUNC_NAME     32          //function name
+#define OP_FLAG_TYPE_HOST_API_CALL 64          //host api call
+#define OP_FLAG_TYPE_REG           128         //register
+
+// ---- Lexer -----------------------------------------------------------------------------
+
+
+#define LEX_STATE_NO_STRING         0           // Lexemes are scanned as normal
+#define LEX_STATE_IN_STRING         1           // Lexemes are scanned as strings
+#define LEX_STATE_END_STRING        2           // Lexemes are scanned as normal, and thenext state is LEXEME_STATE_NOSTRING
+
+#define TOKEN_TYPE_INT              0           // An integer literal
+#define TOKEN_TYPE_FLOAT            1           // An floating-point literal
+#define TOKEN_TYPE_STRING           2           // An string literal
+#define TOKEN_TYPE_QUOTE            3           // A double-quote
+#define TOKEN_TYPE_IDENT            4           // An identifier
+#define TOKEN_TYPE_COLON            5           // A colon
+#define TOKEN_TYPE_OPEN_BRACKET     6           // An openening bracket
+#define TOKEN_TYPE_CLOSE_BRACKET    7           // An closing bracket
+#define TOKEN_TYPE_COMMA            8           // A comma
+#define TOKEN_TYPE_OPEN_BRACE       9           // An openening curly brace
+#define TOKEN_TYPE_CLOSE_BRACE      10          // An closing curly brace
+#define TOKEN_TYPE_NEWLINE          11          // A newline
+
+#define TOKEN_TYPE_INSTR			12			// An instruction
+
+#define TOKEN_TYPE_SETSTACKSIZE     13          // The SetStackSize directive
+#define TOKEN_TYPE_VAR              14          // The Var/Var [] directives
+#define TOKEN_TYPE_FUNC             15          // The Func directives
+#define TOKEN_TYPE_PARAM            16          // The Param directives
+#define TOKEN_TYPE_REG_RETVAL       17          // The _RetVal directives
+
+#define TOKEN_TYPE_INVALID          18          // Error code for invalid tokens
+#define END_OF_TOKEN_STREAM         19          // The end of the stream has been reached

@@ -13,7 +13,7 @@ std::tuple<bool, SymbolTable::SymboleNode> SymbolTable::operator [](std::size_t 
 
 int SymbolTable::AddSymbol(std::wstring name, int size, int stackindex, int funcindex) {
 	auto tempIndex = GetSymbolByIndent(name, funcindex);
-	if (std::get<0>(tempIndex)) return std::get<1>(tempIndex).iIndex;
+	if (std::get<0>(tempIndex)) return -1;
 	SymboleNode tempSymbol;
 	tempSymbol.iFuncIndex = funcindex;
 	tempSymbol.iSize = size;
@@ -39,4 +39,3 @@ int SymbolTable::GetStackIndexByIndent(std::wstring name, int funcindex) {
 
 std::vector<SymbolTable::SymboleNode> SymbolTable::IdentTable = {};
 std::map<std::wstring, int> SymbolTable::IdentMap = {};
-//未来或许会改

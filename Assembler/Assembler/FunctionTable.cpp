@@ -15,12 +15,12 @@ void FunctionTable::SetFuncInfo(std::wstring name, int patamCount, int LocalData
 	auto temp = GetFunctionByName(name);
 	if (std::get<0>(temp)) {
 		FuncTable[FuncMap[name]].iLocalDataSize = LocalDataSize;
-		FuncTable[FuncMap[name]].iParamCOunt = patamCount;
+		FuncTable[FuncMap[name]].iParamCount = patamCount;
 	}
 }
 int FunctionTable::AddFunc(std::wstring name, int entry) {
 	auto tempIndex = GetFunctionByName(name);
-	if (std::get<0>(tempIndex)) return std::get<1>(tempIndex).iIndex;
+	if (std::get<0>(tempIndex)) return -1;
 	FuncNode temp;
 	temp.wstrName = name;
 	temp.iEntryPoint = entry;

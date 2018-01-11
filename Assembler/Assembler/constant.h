@@ -51,6 +51,17 @@
 #define OP_FLAG_TYPE_FUNC_NAME     32          //function name
 #define OP_FLAG_TYPE_HOST_API_CALL 64          //host api call
 #define OP_FLAG_TYPE_REG           128         //register
+// ---- Assembled Instruction Stream ------------------------------------------------------
+
+#define OP_TYPE_INT                 0           // Integer literal value
+#define OP_TYPE_FLOAT               1           // Floating-point literal value
+#define OP_TYPE_STRING_INDEX        2           // String literal value
+#define OP_TYPE_ABS_STACK_INDEX     3           // Absolute array index
+#define OP_TYPE_REL_STACK_INDEX     4           // Relative array index
+#define OP_TYPE_INSTR_INDEX         5           // Instruction index
+#define OP_TYPE_FUNC_INDEX          6           // Function index
+#define OP_TYPE_HOST_API_CALL_INDEX 7           // Host API call index
+#define OP_TYPE_REG                 8           // Register
 
 // ---- Lexer -----------------------------------------------------------------------------
 
@@ -82,3 +93,16 @@
 
 #define TOKEN_TYPE_INVALID          18          // Error code for invalid tokens
 #define END_OF_TOKEN_STREAM         19          // The end of the stream has been reached
+
+// -----------------------------MAIN FUNCTION -------------------------
+#define MAIN_FUNCTION_NAME          L"main"
+
+// ---- ------------------------.XSE Header ---------------------------
+#define XSE_ID_STRING               L"XSE0"      // Written to the file to state it's validity
+#define VERSION_MAJOR               L"0"           // Major version number
+#define VERSION_MINOR               L"4"           // Minor version number
+
+// ------------------------------Output Width---------------------------
+#define IDENTIFIER_WIDTH               4
+#define VERSION_WIDTH                  1
+#define STACK_SIZE_WIDTH               5

@@ -8,6 +8,9 @@ public:
 		static StringTable stable;
 		return stable;
 	}
+	std::size_t size() { return StrTable.size(); }
+	std::vector<std::wstring>::iterator begin() { return StrTable.begin(); }
+	std::vector<std::wstring>::iterator end() { return StrTable.end(); }
 private:
 	static std::map<std::wstring,int> StrMap;
 	static std::vector<std::wstring> StrTable;

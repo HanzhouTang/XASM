@@ -14,7 +14,10 @@ std::tuple<bool, LabelTable::LabelNode> LabelTable::operator[](std::size_t i) {
 
 int LabelTable::AddLabel(std::wstring name, int targetindex, int funcindex) {
 	auto tempIndex = GetLabelByIdent(name, funcindex);
-	if (std::get<0>(tempIndex)) return std::get<1>(tempIndex).iIndex;
+	if (std::get<0>(tempIndex)) {
+		if(std::get<1>(tempIndex).iFuncIndex==funcindex)
+		return -1;
+	}
 	LabelNode labelNode;
 	labelNode.iFuncIndex = funcindex;
 	labelNode.iTargetIndex = targetindex;

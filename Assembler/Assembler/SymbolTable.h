@@ -16,6 +16,7 @@ public:
 	std::tuple<bool, SymboleNode> operator[](std::size_t i);
 	int GetStackIndexByIndent(std::wstring name, int funcindex);
 	int GetSizeByIndent(std::wstring name, int funcindex);
+	std::size_t size() { return IdentTable.size(); }
 	inline static SymbolTable& Instance() {
 		static SymbolTable symboltable;
 		return symboltable;

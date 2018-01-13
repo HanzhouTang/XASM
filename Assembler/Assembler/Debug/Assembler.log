@@ -1,0 +1,12 @@
+﻿  main.cpp
+c:\users\tangh\source\repos\xasm\assembler\assembler\assembler.h(65): warning C4566: character represented by universal-character-name '\u51FD' cannot be represented in the current code page (1252)
+c:\users\tangh\source\repos\xasm\assembler\assembler\assembler.h(65): warning C4566: character represented by universal-character-name '\u6570' cannot be represented in the current code page (1252)
+c:\users\tangh\source\repos\xasm\assembler\assembler\assembler.h(65): warning C4566: character represented by universal-character-name '\uFF1A' cannot be represented in the current code page (1252)
+  Generating Code...
+  Compiling...
+  Assembler.cpp
+c:\users\tangh\source\repos\xasm\assembler\assembler\assembler.h(65): warning C4566: character represented by universal-character-name '\u51FD' cannot be represented in the current code page (1252)
+c:\users\tangh\source\repos\xasm\assembler\assembler\assembler.h(65): warning C4566: character represented by universal-character-name '\u6570' cannot be represented in the current code page (1252)
+c:\users\tangh\source\repos\xasm\assembler\assembler\assembler.h(65): warning C4566: character represented by universal-character-name '\uFF1A' cannot be represented in the current code page (1252)
+  Generating Code...
+  Assembler.vcxproj -> C:\Users\tangh\source\repos\XASM\Assembler\Debug\Assembler.exe

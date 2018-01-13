@@ -106,3 +106,6 @@
 #define IDENTIFIER_WIDTH               4
 #define VERSION_WIDTH                  1
 #define STACK_SIZE_WIDTH               5
+//-------------------------------File Extension-------------------------
+#define XSE_FILE_EXTENSION             L".xse"
+#define XASM_FILE_EXTENSION             L".xasm"

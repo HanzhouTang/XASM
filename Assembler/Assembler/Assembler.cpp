@@ -175,32 +175,6 @@ void Assembler::ResetLexer() {
 }
 
 
-/*
-#define TOKEN_TYPE_INT              0           // An integer literal
-#define TOKEN_TYPE_FLOAT            1           // An floating-point literal
-#define TOKEN_TYPE_STRING           2           // An string literal
-#define TOKEN_TYPE_QUOTE            3           // A double-quote
-#define TOKEN_TYPE_IDENT            4           // An identifier
-#define TOKEN_TYPE_COLON            5           // A colon
-#define TOKEN_TYPE_OPEN_BRACKET     6           // An openening bracket
-#define TOKEN_TYPE_CLOSE_BRACKET    7           // An closing bracket
-#define TOKEN_TYPE_COMMA            8           // A comma
-#define TOKEN_TYPE_OPEN_BRACE       9           // An openening curly brace
-#define TOKEN_TYPE_CLOSE_BRACE      10          // An closing curly brace
-#define TOKEN_TYPE_NEWLINE          11          // A newline
-
-#define TOKEN_TYPE_INSTR			12			// An instruction
-
-#define TOKEN_TYPE_SETSTACKSIZE     13          // The SetStackSize directive
-#define TOKEN_TYPE_VAR              14          // The Var/Var [] directives
-#define TOKEN_TYPE_FUNC             15          // The Func directives
-#define TOKEN_TYPE_PARAM            16          // The Param directives
-#define TOKEN_TYPE_REG_RETVAL       17          // The _RetVal directives
-
-#define TOKEN_TYPE_INVALID          18          // Error code for invalid tokens
-#define END_OF_TOKEN_STREAM         19          // The end of the stream has been reached
-*/
-
 
 void Assembler::Compile()
 {
@@ -238,7 +212,7 @@ void Assembler::Compile()
 			isSetStackSizeFound = true;
 			scriptHeader.stackSize = StringToInt(lexer.CurrentLexeme);
 			break; }
-		case TOKEN_TYPE_FUNC: {// 现在 func 的问题在于 Func Test{ Param test 会错过 test的声明
+		case TOKEN_TYPE_FUNC: {
 			if (isInAFunction) {
 				ExitOnCodeError(L"不能在函数的内部重定义函数");
 			}
@@ -295,15 +269,18 @@ void Assembler::Compile()
 			int stackindex;
 			if (isInAFunction) {
 				stackindex = -(2 + currentFunc.iLocalDataSize);
+				if (symbolTable.AddSymbol(ident, size, stackindex, currentFunc.iIndex) == -1) {
+					ExitOnCodeError(L"函数重定义错误");
+				}
+				currentFunc.iLocalDataSize += size;
 			}
 			else {
 				stackindex = scriptHeader.globalDataSize;
+				if (symbolTable.AddSymbol(ident, size, stackindex, -1) == -1) {
+					ExitOnCodeError(L"函数重定义错误");
+				}
+				scriptHeader.globalDataSize += size;
 			}
-			if (symbolTable.AddSymbol(ident, size, stackindex, currentFunc.iIndex) == -1) {
-				ExitOnCodeError(L"函数重定义错误");
-			}
-			if (isInAFunction) currentFunc.iLocalDataSize += size;
-			else scriptHeader.globalDataSize += size;
 			break;
 		}
 		case TOKEN_TYPE_PARAM: {
@@ -454,8 +431,12 @@ void Assembler::Compile()
 						wstring name = lexer.CurrentLexeme;
 						auto temp = symbolTable.GetSymbolByIndent(name, currentFunc.iIndex);
 						if (!std::get<0>(temp)) {
+							temp = symbolTable.GetSymbolByIndent(name, -1);
+						}
+						if (!std::get<0>(temp)) {
 							ExitOnCodeError(L"引用了未声明的变量" + name);
 						}
+
 						int baseIndex = std::get<1>(temp).iStackIndex;
 						if (GetLookAheadChar() != L'[') {
 							if (std::get<1>(temp).iSize != 1) {
@@ -488,10 +469,13 @@ void Assembler::Compile()
 								wstring offsetName = lexer.CurrentLexeme;
 								auto offsetTemp = symbolTable.GetSymbolByIndent(offsetName, currentFunc.iIndex);
 								if (!std::get<0>(offsetTemp)) {
+									offsetTemp= symbolTable.GetSymbolByIndent(offsetName,-1);
+								}
+								if (!std::get<0>(offsetTemp)) {
 									ExitOnCodeError(L"引用了未声明的变量" + offsetName);
 								}
 								if (std::get<1>(offsetTemp).iSize > 1) {
-									ExitOnCodeError(L"此版本中,作为下标的变量不能未数组");
+									ExitOnCodeError(L"此版本中,作为下标的变量不能为数组");
 								}
 								Op temp;
 								temp.iType = OP_TYPE_REL_STACK_INDEX;
@@ -567,7 +551,6 @@ void Assembler::BuildXSE(std::wstring name) {
 	auto& instrLookupTable = GetInstrLookupTable();
 	auto& instructionOutStream = GetInstrctionOutStream();
 	auto& stringTable = GetStringTable();
-	name = name + L".xse";
 	std::wofstream output(name, std::ios_base::binary | std::ios_base::out);
 	output.imbue(std::locale(std::locale("C"),
 		new std::codecvt_utf16<wchar_t, 0x10ffff, std::generate_header>));
@@ -630,7 +613,7 @@ void Assembler::BuildXSE(std::wstring name) {
 		output << setw(sizeof(std::size_t)) << x.length();
 		output << x;
 	}
-	
+
 	output.close();
 
 }

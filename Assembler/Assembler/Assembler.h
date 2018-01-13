@@ -16,6 +16,7 @@
 #include <cwctype>
 #include <locale>
 #include <codecvt>
+#include<regex>
 #include<iomanip>
 class Assembler {
 public:
@@ -53,7 +54,7 @@ public:
 		auto& instrLookupTable = GetInstrLookupTable();
 		auto& instructionOutStream = GetInstrctionOutStream();
 		auto& stringTable = GetStringTable();
-		wcout << L"生成：               " + name + L".xse 文件成功!"<<endl;
+		wcout << L"生成：               " + name + L"文件成功!"<<endl;
 		wcout << L"共处理了：           " + to_wstring(codes.size()) + L"行汇编" << endl;
 		wcout << L"栈大小：             " + to_wstring(scriptHeader.stackSize) << endl;
 		wcout << L"生成指令流大小为：   " << to_wstring(instructionOutStream.size()) << endl;
@@ -114,9 +115,13 @@ private:
 	inline StringTable& GetStringTable();
 	inline InstructionOutStream& GetInstrctionOutStream();
 	inline void ExitOnCodeError(std::wstring msg) {
-		std::wcout << L"Error: " << msg << ", ";
 		std::cout << "Line: " << codes[lexer.uiCurrentSourceLine].lineNumber << std::endl;
-		system("pause");
+		std::wcout << codes[lexer.uiCurrentSourceLine].code;
+		for (auto ptr = codes[lexer.uiCurrentSourceLine].code.begin(); ptr != lexer.ptrIndex0; ptr++) {
+			std::cout << " ";
+		}
+		std::cout << "^" << std::endl;
+		std::wcout << L"Error: " << msg << std::endl;
 		exit(-1);
 	}
 	bool SkipToNextLine() {

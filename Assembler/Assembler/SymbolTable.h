@@ -2,6 +2,7 @@
 #include<map>
 #include<tuple>
 #include<vector>
+#include<string>
 class SymbolTable {
 public:
 	struct SymboleNode {
